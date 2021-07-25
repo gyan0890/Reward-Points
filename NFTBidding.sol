@@ -48,7 +48,6 @@ contract NFTBidding {
   
   function putOnBid(address nftAddress, uint256 tokenId, string memory tokenURI, uint256 auctionPeriod) public returns(bool){
       ERC721 nftContract = ERC721(nftAddress);
-      require(nftsOnBid[tokenId].state != NFTState.ONBID && nftsOnBid[tokenId].state != NFTState.LOCKED,"NFT is already in bid or lock phase");
       require(msg.sender == nftContract.ownerOf(tokenId), "Only the owner of the NFT can call the put on bid function");
       
       NFTStruct memory nftData = NFTStruct(nftAddress, tokenId, tokenURI, auctionPeriod, msg.sender, NFTState.ONBID);
@@ -61,7 +60,6 @@ contract NFTBidding {
   
   function bid(address nftAddress, uint256 parentTokenId, uint256 tokenId, string memory tokenURI) public returns(bool) {
       ERC721 nftContract = ERC721(nftAddress);
-      require(nftsOnBid[tokenId].state != NFTState.ONBID && nftsOnBid[tokenId].state != NFTState.LOCKED,"NFT is already in bid or lock phase");
       require(msg.sender == nftContract.ownerOf(tokenId), "Only the owner of the NFT can call the bid function");
       
       
@@ -74,6 +72,18 @@ contract NFTBidding {
       emit bidLog(nftAddress, parentTokenId, tokenId, msg.sender);
       
       return true;
+  }
+  
+  function transfer(address nftAddress, uint256 tokenId) public {
+      ERC721 nftContract = ERC721(nftAddress);
+      address owner = nftContract.ownerOf(tokenId);
+      nftContract.transferFrom(owner, address(this), tokenId);
+  }
+  
+  function transferNFTBack(address nftAddress, uint256 tokenId, address to) public {
+      ERC721 nftContract = ERC721(nftAddress);
+      address owner = nftContract.ownerOf(tokenId);
+      nftContract.transferFrom(owner, to, tokenId);
   }
   
 }
