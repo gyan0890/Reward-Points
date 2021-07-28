@@ -177,6 +177,10 @@ export default function IndexNavbar() {
                   <i className="tim-icons icon-image-02" />
                   Explore NFTs
                 </DropdownItem>
+                <DropdownItem tag={Link} to="/user-profile-page">
+                  <i className="tim-icons icon-image-02" />
+                  User Profile
+                </DropdownItem>
                 {/* <DropdownItem tag={Link} to="/profile-page">
                   <i className="tim-icons icon-single-02" />
                   Profile Page

@@ -21,7 +21,7 @@ import classnames from "classnames";
 import PerfectScrollbar from "perfect-scrollbar";
 import axios from 'axios';
 import 
-{   Transfer,
+{   Exchange,
     connectWallet,
     getCurrentWalletConnected} from "../util/interact";
 
@@ -51,22 +51,22 @@ import {
   UncontrolledCarousel,
 } from "reactstrap";
 
-export default function Explore() {
+
+
+export default function UserProfile() {
 
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
 
-  const [address, setAddress] = useState('0x0');
+  const [nftAddress, setAddress] = useState('0x0');
   const [tokenId, setTokenId] = useState('0');
+  const [auctionPeriod, setAuctionPeriod] = useState('0');
+  const [tokenURI, setTokenURI] = useState("");
 
   const [tabs, setTabs] = React.useState(1);
-  const [apiState, setApiState] = useState({
-      apiAddress: "0x0",
-      chainId: 0
-  });
+  const [apiState, setApiState] = useState([]);
 
   let ps = null;
-
 
   React.useEffect(async () => {
     const { address, status } = await getCurrentWalletConnected();
@@ -78,15 +78,12 @@ export default function Explore() {
     getNFTData(address);
   }, []);
 
-  function getNFTData(address) {
-    const url = `https://api.covalenthq.com/v1/80001/address/${address}/balances_v2/?nft=true&key=ckey_876ab80803e44602a7ad845e463`;
+function getNFTData(address) {
+    const url = `https://api.covalenthq.com/v1/4002/address/0xfFe1426e77CE0F7c0945fCC1f4196CD8dC3f090A/balances_v2/?nft=true&key=ckey_876ab80803e44602a7ad845e463`;
     axios.get(url).then(response => {
-        console.log(response.data);
-        apiState.apiAddress = response.data.data.address;
-        apiState.chainId = response.data.data.chain_id;
-        console.log(apiState.apiAddress);
-        console.log(apiState.chainId);
-        setApiState(apiState);
+        // console.log(response.data);
+        // console.log(response.data.data.items);
+        setApiState(response.data.data.items);
     })
     .catch(error => {
         console.log(error)
@@ -146,8 +143,8 @@ export default function Explore() {
     };
   },[]);
 
-  const onTransferRequest = async () => {
-    const { success, status } = await Transfer(address, tokenId);
+  const onExchangeRequest = async () => {
+    const { success, status } = await Exchange(nftAddress, tokenId, tokenURI, auctionPeriod);
     setStatus(status);
     if (success) {
       alert("Successfully transferred");
@@ -155,7 +152,7 @@ export default function Explore() {
   };
 
   return (
-    <>
+    <React.Fragment>
       <IndexNavbar />
       <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
       <Button color="info" id="walletButton" onClick={connectWalletPressed}>
@@ -181,7 +178,148 @@ export default function Explore() {
             className="path"
             src={require("assets/img/path4.png").default}
           />
-          <Container className="align-items-center">
+          <div>
+          <ul>
+          {
+            apiState.map(function(item) {
+              if(item.type === "nft" && item.nft_data != null){
+              console.log(item)
+              const nftData = item.nft_data
+              return nftData.map(function(nft){
+                {/* const tokenURI = nft.token_url;
+                console.log(tokenURI.name); */}
+                {/* console.log(nft); */}
+                {/* const tokenURI = nft.token_url.json();
+                console.log(tokenURI); */}
+              {/* return <div> */}
+              setTokenId(nft.token_id);
+              setTokenURI(nft.token_url);
+              return(
+                <div>
+                <Container className="align-items-center">
+              <Row>
+              <Col className="ml-auto mr-auto" lg="4" md="6">
+              <Card className="card-coin card-plain">
+                  <CardHeader>
+                    <img
+                      alt="..."
+                      className="img-center img-fluid rounded-circle"
+                      src="https://gateway.pinata.cloud/ipfs/QmZd9qJexMRdKH1LhMfKsmHZFqyWCQSr2yzo62Qm1ZWhaY"
+                    />
+                    <h4 className="title">Amazon</h4>
+                  </CardHeader>
+                  <CardBody>
+                    <Nav
+                      className="nav-tabs-primary justify-content-center"
+                      tabs
+                    >
+                      <NavItem>
+                        <NavLink
+                          className={classnames({
+                            active: tabs === 1,
+                          })}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setTabs(1);
+                          }}
+                          href="#pablo"
+                        >
+                          Info
+                        </NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink
+                          className={classnames({
+                            active: tabs === 2,
+                          })}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setTabs(2);
+                          }}
+                          href="#pablo"
+                        >
+                          Exchange
+                        </NavLink>
+                      </NavItem>
+                    </Nav>
+                    <TabContent
+                      className="tab-subcategories"
+                      activeTab={"tab" + tabs}
+                    >
+                      <TabPane tabId="tab1">
+                        <Table className="tablesorter" responsive>
+                          <tbody>
+                            <tr>
+                              <td>OWNER</td>
+                              <td>{nft.token_id}</td>
+                            </tr> 
+                            <tr>
+                              <td>TOKEN URL</td>
+                              <td>{nft.token_url}</td>
+                            </tr>
+                          </tbody>
+                        </Table>
+                      </TabPane>
+                      <TabPane tabId="tab2">
+                        <Row>
+                          <Label sm="3">Auction Period</Label>
+                          <Col sm="9">
+                            <FormGroup>
+                              <Input
+                                placeholder="e.g. e7364bn"
+                                type="text"
+                                onChange={(event) => setAuctionPeriod(event.target.value)}
+                              />
+                              <FormText color="default" tag="span">
+                                Please enter Auction Period in Seconds.
+                              </FormText>
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Label sm="3">Send to</Label>
+                          <Col sm="9">
+                          <FormGroup>
+                              <FormText tag="span">
+                              NFT Address: {}
+                              </FormText>
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Label sm="3">Send to</Label>
+                          <Col sm="9">
+                          <FormGroup>
+                              <FormText tag="span">
+                              Token ID: {nft.token_id}
+                              </FormText>
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                        <Button
+                          className="btn-simple btn-icon btn-round float-right"
+                          color="primary"
+                          type="submit"
+                          onClick={onExchangeRequest}
+                        >
+                          <i className="tim-icons icon-send" />
+                        </Button>
+                      </TabPane>
+                    </TabContent>
+                  </CardBody>
+                </Card>
+              </Col>
+              </Row>
+              </Container>
+              </div>)
+              //return <li> {nft.owner} as the {nft.token_url} </li>
+            })
+          }
+        })
+      }
+      </ul>
+      </div>
+          {/* <Container className="align-items-center">
             <Row>
               <Col className="ml-auto mr-auto" lg="4" md="6">
               <Card className="card-coin card-plain">
@@ -339,13 +477,13 @@ export default function Explore() {
                     >
                       <TabPane tabId="tab1">
                         <Table className="tablesorter" responsive>
-                          {/* <thead className="text-primary">
+                           <thead className="text-primary">
                             <tr>
                               <th className="header">COIN</th>
                               <th className="header">AMOUNT</th>
                               <th className="header">VALUE</th>
                             </tr>
-                          </thead> */}
+                          </thead>
                           <tbody>
                             <tr>
                               <td>POINTS</td>
@@ -493,11 +631,11 @@ export default function Explore() {
                 </Card>
               </Col>
             </Row>
-          </Container>
+          </Container> */}
         </div>
         <Footer />
       </div>
-    </>
+   </React.Fragment>
   );
 }
 

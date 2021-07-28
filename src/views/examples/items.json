@@ -1,0 +1,492 @@
+[
+9       {
+10         "contract_decimals": 18,
+11         "contract_name": "Fantom ETHER",
+12         "contract_ticker_symbol": "FETHER",
+13         "contract_address": "0x5a43d66f7033114116b6ed70357b51cb2216f152",
+14         "supports_erc": [
+15           "erc20"
+16         ],
+17         "logo_url": "",
+18         "type": "cryptocurrency",
+19         "balance": "500000000000000000000",
+20         "balance_24h": "500000000000000000000",
+21         "quote_rate": null,
+22         "quote": 0,
+23         "nft_data": null
+24       },
+25       {
+26         "contract_decimals": 0,
+27         "contract_name": "CFantom",
+28         "contract_ticker_symbol": "CFTM",
+29         "contract_address": "0x655bd1be920d8b903135d359c4a5cb0a7cf0b5bb",
+30         "supports_erc": [
+31           "erc20",
+32           "erc721"
+33         ],
+34         "logo_url": "",
+35         "type": "nft",
+36         "balance": "12",
+37         "balance_24h": null,
+38         "quote_rate": 0,
+39         "quote": 0,
+40         "nft_data": [
+41           {
+42             "token_id": "11",
+43             "token_balance": "1",
+44             "token_url": "https://gateway.pinata.cloud/ipfs/QmTeNLhFf1RaZBFeySk31qwiymk87YiMwhF8Bw9jPn6pyM",
+45             "supports_erc": [
+46               "erc20",
+47               "erc721"
+48             ],
+49             "token_price_wei": null,
+50             "token_quote_rate_eth": null,
+51             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+52             "external_data": {
+53               "name": "Beach Life",
+54               "description": "Beach life is the best life.",
+55               "image": "https://gateway.pinata.cloud/ipfs/QmZ9atYUoWCNoZoxg5JZX2FHMWq4TSEdSttojRgAUaABbA",
+56               "animation_url": null,
+57               "external_url": null,
+58               "attributes": null,
+59               "owner": null
+60             },
+61             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+62             "owner_address": null,
+63             "burned": null
+64           },
+65           {
+66             "token_id": "1",
+67             "token_balance": "1",
+68             "token_url": "https://gateway.pinata.cloud/ipfs/QmfXaWjvYVY8ThxMEkHiJG8w7ozzHcLjfw6yBZpugwk95D",
+69             "supports_erc": [
+70               "erc20",
+71               "erc721"
+72             ],
+73             "token_price_wei": null,
+74             "token_quote_rate_eth": null,
+75             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+76             "external_data": {
+77               "name": "Yellow Roads",
+78               "description": "A road filled with yellow flowers",
+79               "image": "https://gateway.pinata.cloud/ipfs/QmVgjuABK3LNeQVxAjX93XFfzaL9ojehXWZpeVMuL5Yheu",
+80               "animation_url": null,
+81               "external_url": null,
+82               "attributes": null,
+83               "owner": null
+84             },
+85             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+86             "owner_address": null,
+87             "burned": null
+88           },
+89           {
+90             "token_id": "12",
+91             "token_balance": "1",
+92             "token_url": "https://gateway.pinata.cloud/ipfs/QmVkwWisxeNvnvuYxvjnkMYbnyjRNx71XWr7NDZCkPDhgZ",
+93             "supports_erc": [
+94               "erc20",
+95               "erc721"
+96             ],
+97             "token_price_wei": null,
+98             "token_quote_rate_eth": null,
+99             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+100             "external_data": {
+101               "name": "Blue Waves",
+102               "description": "Blue waves on the beach",
+103               "image": "https://gateway.pinata.cloud/ipfs/QmPUEo3iCth3mCPSLrocaZFFMogn55ZxETNGeS7fianBME",
+104               "animation_url": null,
+105               "external_url": null,
+106               "attributes": null,
+107               "owner": null
+108             },
+109             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+110             "owner_address": null,
+111             "burned": null
+112           },
+113           {
+114             "token_id": "2",
+115             "token_balance": "1",
+116             "token_url": "https://gateway.pinata.cloud/ipfs/QmUQ5fKe9rhDVRBxTvnrZFvLnfoNtjMHcYC8jvKGScst1y",
+117             "supports_erc": [
+118               "erc20",
+119               "erc721"
+120             ],
+121             "token_price_wei": null,
+122             "token_quote_rate_eth": null,
+123             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+124             "external_data": {
+125               "name": "White Flower",
+126               "description": "A beautiful white flower",
+127               "image": "https://gateway.pinata.cloud/ipfs/QmTb1T4WXAR5cmnZmXCiN3FuynqPMcYh2hMyaKCsFzi1fV",
+128               "animation_url": null,
+129               "external_url": null,
+130               "attributes": null,
+131               "owner": null
+132             },
+133             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+134             "owner_address": null,
+135             "burned": null
+136           },
+137           {
+138             "token_id": "3",
+139             "token_balance": "1",
+140             "token_url": "https://gateway.pinata.cloud/ipfs/QmRfokWWVVWZ5JtB5W6J6U6jUtZMoEDbdLcpgEQ7DnwJik",
+141             "supports_erc": [
+142               "erc20",
+143               "erc721"
+144             ],
+145             "token_price_wei": null,
+146             "token_quote_rate_eth": null,
+147             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+148             "external_data": {
+149               "name": "Coorg Waterfalls",
+150               "description": "Waterfalls are awesome",
+151               "image": "https://gateway.pinata.cloud/ipfs/QmPwWtkhsh1k6jCmtW9PxZg5Jz2zYhfGX1BgqpoGdEKgSs",
+152               "animation_url": null,
+153               "external_url": null,
+154               "attributes": null,
+155               "owner": null
+156             },
+157             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+158             "owner_address": null,
+159             "burned": null
+160           },
+161           {
+162             "token_id": "4",
+163             "token_balance": "1",
+164             "token_url": "https://gateway.pinata.cloud/ipfs/QmTep4FrEkgD3CYQkHTgk9WpHYDtexsZSkpNVuWmVfmyf3",
+165             "supports_erc": [
+166               "erc20",
+167               "erc721"
+168             ],
+169             "token_price_wei": null,
+170             "token_quote_rate_eth": null,
+171             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+172             "external_data": {
+173               "name": "Red Mountains",
+174               "description": "Red caves and mountains",
+175               "image": "https://gateway.pinata.cloud/ipfs/QmdbRVeRYLTuLydZ1ctSdPJmjbY3bE99RjqSGQsu8vb33M",
+176               "animation_url": null,
+177               "external_url": null,
+178               "attributes": null,
+179               "owner": null
+180             },
+181             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+182             "owner_address": null,
+183             "burned": null
+184           },
+185           {
+186             "token_id": "5",
+187             "token_balance": "1",
+188             "token_url": "https://gateway.pinata.cloud/ipfs/QmetsYERo3CGJ9aLniwyepFtpZPKbSPtSNwNwaPBvn6dH5",
+189             "supports_erc": [
+190               "erc20",
+191               "erc721"
+192             ],
+193             "token_price_wei": null,
+194             "token_quote_rate_eth": null,
+195             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+196             "external_data": {
+197               "name": "Red Caves",
+198               "description": "Red Caves",
+199               "image": "https://gateway.pinata.cloud/ipfs/QmbsXoAqHWbYZu2nd2iLEBJv3PV2QJ7fRbsxah5yJLhrAa",
+200               "animation_url": null,
+201               "external_url": null,
+202               "attributes": null,
+203               "owner": null
+204             },
+205             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+206             "owner_address": null,
+207             "burned": null
+208           },
+209           {
+210             "token_id": "6",
+211             "token_balance": "1",
+212             "token_url": "https://gateway.pinata.cloud/ipfs/QmUSogPnZYdJ3wjeWZbKk3t32q6GoLLDsmZF4BF74DVCUH",
+213             "supports_erc": [
+214               "erc20",
+215               "erc721"
+216             ],
+217             "token_price_wei": null,
+218             "token_quote_rate_eth": null,
+219             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+220             "external_data": {
+221               "name": "Maldives",
+222               "description": "Maldive views",
+223               "image": "https://gateway.pinata.cloud/ipfs/QmTkjqfSzTJWjqn62HVwrLvZv5eiEirhcEgGqBt5AAFGJD",
+224               "animation_url": null,
+225               "external_url": null,
+226               "attributes": null,
+227               "owner": null
+228             },
+229             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+230             "owner_address": null,
+231             "burned": null
+232           },
+233           {
+234             "token_id": "7",
+235             "token_balance": "1",
+236             "token_url": "https://gateway.pinata.cloud/ipfs/QmTM13N3bAGNTAAJjfAcMvWwrW4tWEo4pg2882t1DoMo2T",
+237             "supports_erc": [
+238               "erc20",
+239               "erc721"
+240             ],
+241             "token_price_wei": null,
+242             "token_quote_rate_eth": null,
+243             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+244             "external_data": {
+245               "name": "Long Roads",
+246               "description": "Long roads leading to glory",
+247               "image": "https://gateway.pinata.cloud/ipfs/QmcM31nyF3HH2mkjaKPsB9GFNHqPwsaUF3wb1ZxhVXqeVV",
+248               "animation_url": null,
+249               "external_url": null,
+250               "attributes": null,
+251               "owner": null
+252             },
+253             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+254             "owner_address": null,
+255             "burned": null
+256           },
+257           {
+258             "token_id": "8",
+259             "token_balance": "1",
+260             "token_url": "https://gateway.pinata.cloud/ipfs/QmYFbvFKZVvxQdeqXjURoodrs5DCu58ffGJjGeQikBRWTR",
+261             "supports_erc": [
+262               "erc20",
+263               "erc721"
+264             ],
+265             "token_price_wei": null,
+266             "token_quote_rate_eth": null,
+267             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+268             "external_data": {
+269               "name": "Kashmir Boats",
+270               "description": "Boats in kashmir",
+271               "image": "https://gateway.pinata.cloud/ipfs/QmWeibeUGdccJyicNeYFh9Mfbtox4QUYhQLh6RgZsNSxhv",
+272               "animation_url": null,
+273               "external_url": null,
+274               "attributes": null,
+275               "owner": null
+276             },
+277             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+278             "owner_address": null,
+279             "burned": null
+280           },
+281           {
+282             "token_id": "9",
+283             "token_balance": "1",
+284             "token_url": "https://gateway.pinata.cloud/ipfs/QmUx1B3Nkwp5U4fzce2ELoWqw7zLKWoaMsAEdxUQiqRj4T",
+285             "supports_erc": [
+286               "erc20",
+287               "erc721"
+288             ],
+289             "token_price_wei": null,
+290             "token_quote_rate_eth": null,
+291             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+292             "external_data": {
+293               "name": "Geysers",
+294               "description": "Geysers and Sunsets",
+295               "image": "https://gateway.pinata.cloud/ipfs/QmefRA37eBCwE1iK6tpuB2iGiCiR59QWLRbdoFUCmRKqhg",
+296               "animation_url": null,
+297               "external_url": null,
+298               "attributes": null,
+299               "owner": null
+300             },
+301             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+302             "owner_address": null,
+303             "burned": null
+304           },
+305           {
+306             "token_id": "10",
+307             "token_balance": "1",
+308             "token_url": "https://gateway.pinata.cloud/ipfs/QmbXM9Rwc37aZigAQ7xQemKnm2irQv7YkcqDzXyTMhR4b2",
+309             "supports_erc": [
+310               "erc20",
+311               "erc721"
+312             ],
+313             "token_price_wei": null,
+314             "token_quote_rate_eth": null,
+315             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+316             "external_data": {
+317               "name": "Beach Sunset",
+318               "description": "Sunset on the beach",
+319               "image": "https://gateway.pinata.cloud/ipfs/QmaF9kKE3qcWDUz1jSfa9XSSBhQEsQerY4aDVuRrZ9kSg8",
+320               "animation_url": null,
+321               "external_url": null,
+322               "attributes": null,
+323               "owner": null
+324             },
+325             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+326             "owner_address": null,
+327             "burned": null
+328           }
+329         ]
+330       },
+331       {
+332         "contract_decimals": 0,
+333         "contract_name": "FantomNew",
+334         "contract_ticker_symbol": "FMTC",
+335         "contract_address": "0x7ba629948025c8a1a74526e786f6d5b856169d3b",
+336         "supports_erc": [
+337           "erc20"
+338         ],
+339         "logo_url": "",
+340         "type": "nft",
+341         "balance": "0",
+342         "balance_24h": null,
+343         "quote_rate": 0,
+344         "quote": 0,
+345         "nft_data": null
+346       },
+347       {
+348         "contract_decimals": 18,
+349         "contract_name": "Fantom UNI",
+350         "contract_ticker_symbol": "FUNI",
+351         "contract_address": "0xaedfeff77b0c5eb1f7cda6aa96d9ce938f14b233",
+352         "supports_erc": [
+353           "erc20"
+354         ],
+355         "logo_url": "",
+356         "type": "cryptocurrency",
+357         "balance": "6567000000000000000000",
+358         "balance_24h": "6567000000000000000000",
+359         "quote_rate": null,
+360         "quote": 0,
+361         "nft_data": null
+362       },
+363       {
+364         "contract_decimals": 0,
+365         "contract_name": "FantomHack",
+366         "contract_ticker_symbol": "FMTH",
+367         "contract_address": "0xd3d706c14a108591843c7a9d77c2b413e5399172",
+368         "supports_erc": [
+369           "erc20",
+370           "erc721"
+371         ],
+372         "logo_url": "",
+373         "type": "nft",
+374         "balance": "3",
+375         "balance_24h": null,
+376         "quote_rate": 0,
+377         "quote": 0,
+378         "nft_data": [
+379           {
+380             "token_id": "1",
+381             "token_balance": "1",
+382             "token_url": "https://gateway.pinata.cloud/ipfs/QmdYWQAYtUhDjoNqNtgbnJwnBuEksWbJnu8NkuXxoXZJ1z",
+383             "supports_erc": [
+384               "erc20",
+385               "erc721"
+386             ],
+387             "token_price_wei": null,
+388             "token_quote_rate_eth": null,
+389             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+390             "external_data": {
+391               "name": "Beautiful Red Skies",
+392               "description": "An original photograph of an evening in the woods",
+393               "image": "https://gateway.pinata.cloud/ipfs/QmXVCPf35jN3Y7dxezUoaffDE5UVPisLCdg3ZDhThoCfz7",
+394               "animation_url": null,
+395               "external_url": null,
+396               "attributes": null,
+397               "owner": null
+398             },
+399             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+400             "owner_address": null,
+401             "burned": null
+402           },
+403           {
+404             "token_id": "2",
+405             "token_balance": "1",
+406             "token_url": "https://gateway.pinata.cloud/ipfs/QmUSy1QkUYdzmUiAZKPDQjV7baTM8vXz1neuYcZ3eoPnDB",
+407             "supports_erc": [
+408               "erc20",
+409               "erc721"
+410             ],
+411             "token_price_wei": null,
+412             "token_quote_rate_eth": null,
+413             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+414             "external_data": {
+415               "name": "Patterns",
+416               "description": "Circles and Squares",
+417               "image": "https://gateway.pinata.cloud/ipfs/QmXXLb56Dg6dY955Nr9XjLNG6EG9enKrx9RH3L5Hg7UFe1",
+418               "animation_url": null,
+419               "external_url": null,
+420               "attributes": null,
+421               "owner": null
+422             },
+423             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+424             "owner_address": null,
+425             "burned": null
+426           },
+427           {
+428             "token_id": "3",
+429             "token_balance": "1",
+430             "token_url": "https://gateway.pinata.cloud/ipfs/QmUeMpfKY8P96PepZcVXqYJKPtGiE3MtfCYbmEQQRuu14k",
+431             "supports_erc": [
+432               "erc20",
+433               "erc721"
+434             ],
+435             "token_price_wei": null,
+436             "token_quote_rate_eth": null,
+437             "original_owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+438             "external_data": {
+439               "name": "Abstract",
+440               "description": "Shapes and Abstract Placements",
+441               "image": "https://gateway.pinata.cloud/ipfs/QmdKY48fFw73Ldkt8o3FqYvZ3LXGYAPaZ7ABn1Zr2o8sB9",
+442               "animation_url": null,
+443               "external_url": null,
+444               "attributes": null,
+445               "owner": null
+446             },
+447             "owner": "0xffe1426e77ce0f7c0945fcc1f4196cd8dc3f090a",
+448             "owner_address": null,
+449             "burned": null
+450           }
+451         ]
+452       },
+453       {
+454         "contract_decimals": 18,
+455         "contract_name": "Fantom BTC",
+456         "contract_ticker_symbol": "FBTC",
+457         "contract_address": "0xd4d3c78bd8a63a9db6a6bbf0fc8b337819e44326",
+458         "supports_erc": [
+459           "erc20"
+460         ],
+461         "logo_url": "",
+462         "type": "cryptocurrency",
+463         "balance": "20000000000000000000",
+464         "balance_24h": "20000000000000000000",
+465         "quote_rate": null,
+466         "quote": 0,
+467         "nft_data": null
+468       },
+469       {
+470         "contract_decimals": 18,
+471         "contract_name": "Fantom USD",
+472         "contract_ticker_symbol": "FUSD",
+473         "contract_address": "0xf417d999f2d2cab0107db12a78c84d14b63c1314",
+474         "supports_erc": [
+475           "erc20"
+476         ],
+477         "logo_url": "",
+478         "type": "cryptocurrency",
+479         "balance": "800000000000000000000",
+480         "balance_24h": "800000000000000000000",
+481         "quote_rate": null,
+482         "quote": 0,
+483         "nft_data": null
+484       },
+485       {
+486         "contract_decimals": 18,
+487         "contract_name": "Fantom",
+488         "contract_ticker_symbol": "FTM",
+489         "contract_address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+490         "supports_erc": null,
+491         "logo_url": "https://logos.covalenthq.com/tokens/0x4e15361fd6b4bb609fa63c81a2be19d873717870.png",
+492         "type": "cryptocurrency",
+493         "balance": "12520561420000000000",
+494         "balance_24h": "12520561420000000000",
+495         "quote_rate": 0,
+496         "quote": 0,
+497         "nft_data": null
+498       }
+499     ]

@@ -1,4 +1,5 @@
 import {testNFTAbi} from '../abis/TestNFTAbi';
+import {BiddingNFTAbi} from '../abis/BiddingNFTAbi';
 import Web3 from 'web3';
 import { pinJSONToIPFS } from "./pinata.js";
 require("dotenv").config();
@@ -7,6 +8,9 @@ require("dotenv").config();
 
 const NFTContractAddr = '0x7aCeC4eccba9323a784C5720fB81f1e6944f0331';
 const web3 = new Web3(Web3.givenProvider);
+
+const BiddingNFTContractAddr = '0x123D5E24630470d38709DE8adDD157aAcD1B412d';
+
 
 export const connectWallet = async () => {
   if (window.ethereum) {
@@ -171,3 +175,122 @@ export const Transfer = async (toAddress, tokenId) => {
   }
 
 };
+
+export const Exchange = async(nftAddress, tokenID, tokenURI, auctionPeriod) => {
+  window.contract = await new web3.eth.Contract(BiddingNFTAbi, BiddingNFTContractAddr);
+  const transactionParameters = {
+    to: BiddingNFTContractAddr, // Required except during contract publications.
+    from: window.ethereum.selectedAddress, // must match user's active address.
+    data: window.contract.methods
+      .putOnBid(nftAddress, tokenID, tokenURI, auctionPeriod)
+      .encodeABI(),
+  };
+
+  try {
+    const txHash = await window.ethereum.request({
+      method: "eth_sendTransaction",
+      params: [transactionParameters],
+    });
+    return {
+      success: true,
+      status:
+        "✅ Check out your transaction on PolygonScan: " +
+        txHash,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      status: "😥 Something went wrong: " + error.message,
+    };
+  }
+};
+
+export const Approve = async(nftAddress) => {
+  window.contract = await new web3.eth.Contract(testNFTAbi, nftAddress);
+  const transactionParameters = {
+    to: nftAddress, // Required except during contract publications.
+    from: window.ethereum.selectedAddress, // must match user's active address.
+    data: window.contract.methods
+      .approve(BiddingNFTContractAddr, true)
+      .encodeABI(),
+  };
+
+  try {
+    const txHash = await window.ethereum.request({
+      method: "eth_sendTransaction",
+      params: [transactionParameters],
+    });
+    return {
+      success: true,
+      status:
+        "✅ Check out your transaction on PolygonScan: " +
+        txHash,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      status: "😥 Something went wrong: " + error.message,
+    };
+  }
+};
+
+
+export const DepositNFTs = async(nftAddress, tokenID) => {
+  window.contract = await new web3.eth.Contract(BiddingNFTAbi, BiddingNFTContractAddr);
+  const transactionParameters = {
+    to: BiddingNFTContractAddr, // Required except during contract publications.
+    from: window.ethereum.selectedAddress, // must match user's active address.
+    data: window.contract.methods
+      .transfer(nftAddress, tokenID)
+      .encodeABI(),
+  };
+
+  try {
+    const txHash = await window.ethereum.request({
+      method: "eth_sendTransaction",
+      params: [transactionParameters],
+    });
+    return {
+      success: true,
+      status:
+        "✅ Check out your transaction on PolygonScan: " +
+        txHash,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      status: "😥 Something went wrong: " + error.message,
+    };
+  }
+};
+
+
+export const ReturnNFTs = async(nftAddress, tokenID, owner) => {
+  window.contract = await new web3.eth.Contract(BiddingNFTAbi, BiddingNFTContractAddr);
+  const transactionParameters = {
+    to: BiddingNFTContractAddr, // Required except during contract publications.
+    from: window.ethereum.selectedAddress, // must match user's active address.
+    data: window.contract.methods
+      .transferNFTBack(nftAddress, tokenID, owner)
+      .encodeABI(),
+  };
+
+  try {
+    const txHash = await window.ethereum.request({
+      method: "eth_sendTransaction",
+      params: [transactionParameters],
+    });
+    return {
+      success: true,
+      status:
+        "✅ Check out your transaction on PolygonScan: " +
+        txHash,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      status: "😥 Something went wrong: " + error.message,
+    };
+  }
+};
+
