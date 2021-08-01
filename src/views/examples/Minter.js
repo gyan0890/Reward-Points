@@ -58,25 +58,27 @@ const Minter = (props) => {
   }
 
   const connectWalletPressed = async () => {
+    console.log()
     const walletResponse = await connectWallet();
     setStatus(walletResponse.status);
     setWallet(walletResponse.address);
   };
 
   const onMintPressed = async () => {
-    const { success, status } = await mintNFT(points, expiry);
+    const { success, status } = await mintNFT(walletAddress, points, expiry);
     setStatus(status);
     if (success) {
-      setPoints("");
-      setExpiry("");
+      setPoints(points);
+      setExpiry(expiry);
     }
   };
 
   return (
-    <div>
+    <>
     <IndexNavbar />
       <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-      <Button color="info" id="walletButton" onClick={connectWalletPressed}>
+      {/* <Button></Button> */}
+      <Button color="info" id="walletButton" style={{position: 'absolute',  top:'11px',  zIndex: '100000000'}} onClick={connectWalletPressed}>
         {walletAddress.length > 0 ? (
           "Connected: " +
           String(walletAddress).substring(0, 6) +
@@ -91,6 +93,18 @@ const Minter = (props) => {
       <br/>
       <br/>
     <div className="Minter">
+    {/* <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
+    <Button color="info" id="walletButton" onClick={connectWalletPressed}>
+        {walletAddress.length > 0 ? (
+          "Connected: " +
+          String(walletAddress).substring(0, 6) +
+          "..." +
+          String(walletAddress).substring(38)
+        ) : (
+          <span>Connect Wallet</span>
+        )}
+      </Button>
+      </div> */}
       <Row className="row-grid justify-content-between align-items-center text-left">
       <Col lg="6" md="6">
       <Card>
@@ -146,7 +160,7 @@ const Minter = (props) => {
       </Row>
       </div>
       <Footer />
-      </div>
+      </>
   );
 };
 

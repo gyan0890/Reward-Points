@@ -47,8 +47,6 @@ import {
   Container,
   Row,
   Col,
-  UncontrolledTooltip,
-  UncontrolledCarousel,
 } from "reactstrap";
 
 export default function Explore() {
@@ -84,8 +82,8 @@ export default function Explore() {
         console.log(response.data);
         apiState.apiAddress = response.data.data.address;
         apiState.chainId = response.data.data.chain_id;
-        console.log(apiState.apiAddress);
-        console.log(apiState.chainId);
+        // console.log(apiState.apiAddress);
+        // console.log(apiState.chainId);
         setApiState(apiState);
     })
     .catch(error => {
@@ -158,7 +156,7 @@ export default function Explore() {
     <>
       <IndexNavbar />
       <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-      <Button color="info" id="walletButton" onClick={connectWalletPressed}>
+      <Button color="info" id="walletButton" style={{position: 'absolute',  top:'11px',  zIndex: '100000000'}} onClick={connectWalletPressed}>
         {walletAddress.length > 0 ? (
           "Connected: " +
           String(walletAddress).substring(0, 6) +
