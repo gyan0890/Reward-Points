@@ -94,7 +94,7 @@ async function loadContract() {
   return new web3.eth.Contract(testNFTAbi, NFTContractAddr);
 }
 
-export const mintNFT = async (points, expiry) => {
+export const mintNFT = async (address, points, expiry) => {
   if (points.trim() == "" || expiry.trim() == "") {
     return {
       success: false,
@@ -104,6 +104,21 @@ export const mintNFT = async (points, expiry) => {
 
   //make metadata
   const metadata = new Object();
+  if(address === "0xdFE56933c0e112589A2BD414161B39aa3A1EC4BE"){
+    metadata.name = "Amazon";
+    metadata.description = "Reward Points NFT by Amazon";
+    metadata.image = 'https://gateway.pinata.cloud/ipfs/QmeKwVX4r9k6dknzTyxr6rxDxf8XwKKDqzfMbcWqXcFVeP';
+  }
+  else if(address === "0x4b8a65c8ef37430edFaaD1B61Dba2D680f56FFd7"){
+    metadata.name = "Chroma";
+    metadata.description = "Reward Points NFT by Chroma";
+    metadata.image = 'https://gateway.pinata.cloud/ipfs/QmXCsxjFvWGab5jLhxPXLCUqjudM6LkVkctsUZb3nz3SV3';
+  }
+  else if(address === "0xA873Bb96597D71d3BA6764ab26387DB598F65372"){
+    metadata.name = "Big Bazaar";
+    metadata.description = "Reward Points NFT by Big Bazaar";
+    metadata.image = 'https://gateway.pinata.cloud/ipfs/QmRiXXH18KwBAtNtZRGta4gXMCuu5cq6dMBLmsVzS1HKo4';
+  }
   metadata.points = points;
   metadata.image = 'https://gateway.pinata.cloud/ipfs/QmZd9qJexMRdKH1LhMfKsmHZFqyWCQSr2yzo62Qm1ZWhaY';
   metadata.expiry = expiry;
@@ -253,7 +268,7 @@ export const DepositNFTs = async(nftAddress, tokenID) => {
     return {
       success: true,
       status:
-        "✅ Check out your transaction on PolygonScan: " +
+        "✅ Check out your transaction on PolygonScan: https://mumbai.polygonscan.com/tx/" +
         txHash,
     };
   } catch (error) {

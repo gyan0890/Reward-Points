@@ -77,7 +77,7 @@ export default function UserProfile() {
   }, []);
 
   function getNFTData(address) {
-    const url = `https://api.covalenthq.com/v1/4002/address/0xfFe1426e77CE0F7c0945fCC1f4196CD8dC3f090A/balances_v2/?nft=true&key=ckey_876ab80803e44602a7ad845e463`;
+    const url = `https://api.covalenthq.com/v1/80001/address/${address}/balances_v2/?nft=true&key=ckey_876ab80803e44602a7ad845e463`;
     axios
       .get(url)
       .then((response) => {
@@ -141,12 +141,12 @@ export default function UserProfile() {
     };
   }, []);
 
-  const onExchangeRequest = async (nftData) => {
+  const onExchangeRequest = async (nftAddress, nft, auctionPeriod) => {
     debugger;
     const { success, status } = await Exchange(
       nftAddress,
-      tokenId,
-      tokenURI,
+      nft.token_id,
+      nft.token_url,
       auctionPeriod
     );
     setStatus(status);
@@ -170,9 +170,9 @@ export default function UserProfile() {
                 <img
                   alt="..."
                   className="img-center img-fluid rounded-circle"
-                  src="https://gateway.pinata.cloud/ipfs/QmZd9qJexMRdKH1LhMfKsmHZFqyWCQSr2yzo62Qm1ZWhaY"
+                  src= {nft.image}
                 />
-                <h4 className="title">Amazon</h4>
+              <h4 className="title">{nft.name}</h4>
               </CardHeader>
               <CardBody>
                 <Nav className="nav-tabs-primary justify-content-center" tabs>
@@ -263,9 +263,7 @@ export default function UserProfile() {
                       className="btn-simple btn-icon btn-round float-right"
                       color="primary"
                       type="submit"
-                      data-attr="{nft.token_url}"
-                      data-to="{}"
-                      onClick={(event) => onExchangeRequest(nft)}
+                      onClick={() => onExchangeRequest(item.contract_address,nft, auctionPeriod)}
                     >
                       <i className="tim-icons icon-send" />
                     </Button>
@@ -425,7 +423,7 @@ export default function UserProfile() {
           alignItems: "center",
         }}
       >
-        <Button color="info" id="walletButton" onClick={connectWalletPressed}>
+        <Button color="info" id="walletButton" style={{position: 'absolute',  top:'11px',  zIndex: '100000000'}} onClick={connectWalletPressed}>
           {walletAddress.length > 0 ? (
             "Connected: " +
             String(walletAddress).substring(0, 6) +
