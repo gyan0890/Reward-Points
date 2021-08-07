@@ -15,8 +15,7 @@ contract NFTBidding {
     
     enum NFTState {
 	    ONBID,
-	    LOCKED, 
-	    RELEASED
+	    FREE
 	}
   
   mapping(uint256 => NFTState) tokenState;
@@ -41,6 +40,19 @@ contract NFTBidding {
       
       return true;
   } 
+  
+  function closeBidding(uint256 _tokenId) public returns(bool){
+       tokenState[_tokenId] = NFTState.FREE;
+       return true;
+  }
+  
+  function getBiddingContractAddress(uint256 _tokenId) public view returns(address)  {
+      return tokenBids[_tokenId];
+  }
+  
+  function getNFTState(uint256 _tokenId) public view returns(NFTState){
+      return tokenState[_tokenId];
+  }
   
 }
 
@@ -77,7 +89,7 @@ contract Bidding {
     // Recording all the bids
     mapping(uint => Bid) bids;
 
-
+     event bidLog(address, uint256, uint256, address);
     // Events that  will be fired on changes.
     event AuctionEnded(address winner, address nftAddress);
 
@@ -135,6 +147,8 @@ contract Bidding {
        address nftOwner = nftContract.ownerOf(tokenId);
        nftContract.transferFrom(nftOwner, address(this), _tokenId);
        
+       emit bidLog( newBid.nftAddress,newBid.tokenId , block.timestamp, msg.sender);
+       
        bidCounter = bidCounter+1;
     }
     
@@ -167,17 +181,17 @@ contract Bidding {
         
     }
     
-     function transferNFT(address nftAddress, uint256 _tokenId) public {
-      ERC721 nftContract = ERC721(nftAddress);
-      address nftOwner = nftContract.ownerOf(_tokenId);
-      nftContract.transferFrom(nftOwner, address(this), _tokenId);
-    }
+    //  function transferNFT(address nftAddress, uint256 _tokenId) public {
+    //   ERC721 nftContract = ERC721(nftAddress);
+    //   address nftOwner = nftContract.ownerOf(_tokenId);
+    //   nftContract.transferFrom(nftOwner, address(this), _tokenId);
+    // }
   
-    function transferNFTBack(address nftAddress, uint256 _tokenId, address to) public {
-      ERC721 nftContract = ERC721(nftAddress);
-      address nftOwner = nftContract.ownerOf(_tokenId);
-      nftContract.transferFrom(nftOwner, to, _tokenId);
-    }
+    // function transferNFTBack(address nftAddress, uint256 _tokenId, address to) public {
+    //   ERC721 nftContract = ERC721(nftAddress);
+    //   address nftOwner = nftContract.ownerOf(_tokenId);
+    //   nftContract.transferFrom(nftOwner, to, _tokenId);
+    // }
     
     
 }
