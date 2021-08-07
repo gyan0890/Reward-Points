@@ -6,6 +6,45 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Counters.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/AccessControl.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/AccessControlEnumerable.sol";
+
+contract NFTBidding {
+    
+    using Counters for Counters.Counter;
+    Counters.Counter private _bids;
+    
+    
+    enum NFTState {
+	    ONBID,
+	    LOCKED, 
+	    RELEASED
+	}
+  
+  mapping(uint256 => NFTState) tokenState;
+  mapping(uint256 => address) tokenBids;
+  
+  
+  event nftOnBid(address, uint256, address);
+  event bidLog(address, uint256, uint256, address);
+  
+  
+  
+  function putOnBid(address nftAddress, uint256 tokenId) public returns(bool){
+      ERC721 nftContract = ERC721(nftAddress);
+      require(msg.sender == nftContract.ownerOf(tokenId), "Only the owner of the NFT can call the put on bid function");
+      
+      
+      Bidding bidding = new Bidding(tokenId, block.timestamp, nftAddress,msg.sender);
+      tokenBids[tokenId] = address(bidding);
+      tokenState[tokenId] = NFTState.ONBID;
+      
+      emit nftOnBid(nftAddress, tokenId, msg.sender);
+      
+      return true;
+  } 
+  
+}
+
+
 /* 
 * This is the bidding contract 
 */
@@ -126,6 +165,18 @@ contract Bidding {
         
         return true;
         
+    }
+    
+     function transferNFT(address nftAddress, uint256 _tokenId) public {
+      ERC721 nftContract = ERC721(nftAddress);
+      address nftOwner = nftContract.ownerOf(_tokenId);
+      nftContract.transferFrom(nftOwner, address(this), _tokenId);
+    }
+  
+    function transferNFTBack(address nftAddress, uint256 _tokenId, address to) public {
+      ERC721 nftContract = ERC721(nftAddress);
+      address nftOwner = nftContract.ownerOf(_tokenId);
+      nftContract.transferFrom(nftOwner, to, _tokenId);
     }
     
     
