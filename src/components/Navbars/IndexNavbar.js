@@ -156,7 +156,7 @@ export default function IndexNavbar() {
                 <p className="d-lg-none d-xl-none">Instagram</p>
               </NavLink>
             </NavItem>
-            <UncontrolledDropdown nav  id="menucontainer">
+            <UncontrolledDropdown nav style={{ display: "none" }}  id="menucontainer">
               <DropdownToggle
                 caret
                 color="default"
