@@ -1,5 +1,6 @@
 import {testNFTAbi} from '../abis/TestNFTAbi';
 import {BiddingNFTAbi} from '../abis/BiddingNFTAbi';
+import {Auction} from '../abis/NFTBiddingAbi';
 import Web3 from 'web3';
 import { pinJSONToIPFS } from "./pinata.js";
 require("dotenv").config();
@@ -8,9 +9,10 @@ require("dotenv").config();
 
 const NFTContractAddr = '0x7aCeC4eccba9323a784C5720fB81f1e6944f0331';
 const web3 = new Web3(Web3.givenProvider);
+const AuctionContract = '0x457F0D56862F0E0E965f37Ce057B87886420b8C4';
 
 const BiddingNFTContractAddr = '0x123D5E24630470d38709DE8adDD157aAcD1B412d';
-
+let biddingContractAddress = '';
 
 export const connectWallet = async () => {
   if (window.ethereum) {
@@ -90,8 +92,8 @@ export const getCurrentWalletConnected = async () => {
   }
 };
 
-async function loadContract() {
-  return new web3.eth.Contract(testNFTAbi, NFTContractAddr);
+async function loadAuctionContract() {
+  return new web3.eth.Contract(Auction, AuctionContract);
 }
 
 export const mintNFT = async (address, points, expiry) => {
@@ -103,24 +105,30 @@ export const mintNFT = async (address, points, expiry) => {
   }
 
   //make metadata
-  const metadata = new Object();
-  if(address === "0xdFE56933c0e112589A2BD414161B39aa3A1EC4BE"){
+  const metadata = {};
+  debugger;
+  address = address.toString();
+  if(address == "0xdFE56933c0e112589A2BD414161B39aa3A1EC4BE".toLowerCase()){
     metadata.name = "Amazon";
     metadata.description = "Reward Points NFT by Amazon";
     metadata.image = 'https://gateway.pinata.cloud/ipfs/QmeKwVX4r9k6dknzTyxr6rxDxf8XwKKDqzfMbcWqXcFVeP';
   }
-  else if(address === "0x4b8a65c8ef37430edFaaD1B61Dba2D680f56FFd7"){
+  else if(address == "0x4b8a65c8ef37430edFaaD1B61Dba2D680f56FFd7".toLowerCase()){
     metadata.name = "Chroma";
     metadata.description = "Reward Points NFT by Chroma";
     metadata.image = 'https://gateway.pinata.cloud/ipfs/QmXCsxjFvWGab5jLhxPXLCUqjudM6LkVkctsUZb3nz3SV3';
   }
-  else if(address === "0xA873Bb96597D71d3BA6764ab26387DB598F65372"){
+  else if(address == "0xA873Bb96597D71d3BA6764ab26387DB598F65372".toLowerCase()){
     metadata.name = "Big Bazaar";
     metadata.description = "Reward Points NFT by Big Bazaar";
     metadata.image = 'https://gateway.pinata.cloud/ipfs/QmRiXXH18KwBAtNtZRGta4gXMCuu5cq6dMBLmsVzS1HKo4';
   }
+  else {
+    metadata.name = "RGV and Co.";
+    metadata.description = "Reward Points NFT by RGV";
+    metadata.image = 'https://gateway.pinata.cloud/ipfs/QmRiXXH18KwBAtNtZRGta4gXMCuu5cq6dMBLmsVzS1HKo4';
+  }
   metadata.points = points;
-  metadata.image = 'https://gateway.pinata.cloud/ipfs/QmZd9qJexMRdKH1LhMfKsmHZFqyWCQSr2yzo62Qm1ZWhaY';
   metadata.expiry = expiry;
 
   const pinataResponse = await pinJSONToIPFS(metadata);
@@ -150,7 +158,7 @@ export const mintNFT = async (address, points, expiry) => {
     return {
       success: true,
       status:
-        "✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/" +
+        "✅ Check out your transaction on PolygonScan: https://mumbai.polygonscan.com/tx" +
         txHash,
     };
   } catch (error) {
@@ -163,6 +171,7 @@ export const mintNFT = async (address, points, expiry) => {
 
 export const Transfer = async (toAddress, tokenId) => {
   window.contract = await new web3.eth.Contract(testNFTAbi, NFTContractAddr);
+  alert(tokenId);
   const transactionParameters = {
     to: NFTContractAddr, // Required except during contract publications.
     from: window.ethereum.selectedAddress, // must match user's active address.
@@ -191,13 +200,13 @@ export const Transfer = async (toAddress, tokenId) => {
 
 };
 
-export const Exchange = async(nftAddress, tokenID, tokenURI, auctionPeriod) => {
-  window.contract = await new web3.eth.Contract(BiddingNFTAbi, BiddingNFTContractAddr);
+export const Exchange = async(nftAddress, tokenID) => {
+  window.contract = await loadAuctionContract();
   const transactionParameters = {
-    to: BiddingNFTContractAddr, // Required except during contract publications.
+    to: AuctionContract, // Required except during contract publications.
     from: window.ethereum.selectedAddress, // must match user's active address.
     data: window.contract.methods
-      .putOnBid(nftAddress, tokenID, tokenURI, auctionPeriod)
+      .putOnBid(nftAddress, tokenID)
       .encodeABI(),
   };
 
@@ -220,13 +229,14 @@ export const Exchange = async(nftAddress, tokenID, tokenURI, auctionPeriod) => {
   }
 };
 
-export const Approve = async(nftAddress) => {
+export const Approve = async(nftAddress,contractAddress, token_id) => {
+  debugger;
   window.contract = await new web3.eth.Contract(testNFTAbi, nftAddress);
   const transactionParameters = {
     to: nftAddress, // Required except during contract publications.
     from: window.ethereum.selectedAddress, // must match user's active address.
     data: window.contract.methods
-      .approve(BiddingNFTContractAddr, true)
+      .approve(contractAddress, token_id)
       .encodeABI(),
   };
 
@@ -250,33 +260,38 @@ export const Approve = async(nftAddress) => {
 };
 
 
-export const DepositNFTs = async(nftAddress, tokenID) => {
-  window.contract = await new web3.eth.Contract(BiddingNFTAbi, BiddingNFTContractAddr);
-  const transactionParameters = {
-    to: BiddingNFTContractAddr, // Required except during contract publications.
-    from: window.ethereum.selectedAddress, // must match user's active address.
-    data: window.contract.methods
-      .transfer(nftAddress, tokenID)
-      .encodeABI(),
-  };
+export const getBiddingContract = async(tokenID) => {
+  window.contract = await loadAuctionContract();
+  window.contract.methods.getBiddingContractAddress(tokenID)
+  .call(function(error, result){
+    biddingContractAddress = result;
+    console.log(error);
+  });
+  // const transactionParameters = {
+  //   to: AuctionContract, // Required except during contract publications.
+  //   from: window.ethereum.selectedAddress, // must match user's active address.
+  //   data: window.contract.methods
+  //     .getBiddingContractAddress(tokenID)
+  //     .encodeABI(),
+  // };
 
-  try {
-    const txHash = await window.ethereum.request({
-      method: "eth_sendTransaction",
-      params: [transactionParameters],
-    });
-    return {
-      success: true,
-      status:
-        "✅ Check out your transaction on PolygonScan: https://mumbai.polygonscan.com/tx/" +
-        txHash,
-    };
-  } catch (error) {
-    return {
-      success: false,
-      status: "😥 Something went wrong: " + error.message,
-    };
-  }
+  // try {
+  //   const txHash = await window.ethereum.request({
+  //     method: "eth_sendTransaction",
+  //     params: [transactionParameters],
+  //   });
+  //   return {
+  //     success: true,
+  //     status:
+  //       "✅ Check out your transaction on PolygonScan: https://mumbai.polygonscan.com/tx/" +
+  //       txHash,
+  //   };
+  // } catch (error) {
+  //   return {
+  //     success: false,
+  //     status: "😥 Something went wrong: " + error.message,
+  //   };
+  // }
 };
 
 

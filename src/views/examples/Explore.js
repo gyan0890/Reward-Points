@@ -57,11 +57,9 @@ export default function Explore() {
   const [address, setAddress] = useState('0x0');
   const [tokenId, setTokenId] = useState('0');
 
+  const [transferAddress, setTransferAddress] = useState('0x0');
   const [tabs, setTabs] = React.useState(1);
-  const [apiState, setApiState] = useState({
-      apiAddress: "0x0",
-      chainId: 0
-  });
+  const [apiState, setApiState] = useState([]);
 
   let ps = null;
 
@@ -76,20 +74,24 @@ export default function Explore() {
     getNFTData(address);
   }, []);
 
+  function handleChange(event, tokenId) {
+    setTransferAddress(event.target.value);
+    setTokenId(tokenId);
+  }
+
   function getNFTData(address) {
     const url = `https://api.covalenthq.com/v1/80001/address/${address}/balances_v2/?nft=true&key=ckey_876ab80803e44602a7ad845e463`;
     axios.get(url).then(response => {
         console.log(response.data);
         apiState.apiAddress = response.data.data.address;
         apiState.chainId = response.data.data.chain_id;
-        // console.log(apiState.apiAddress);
-        // console.log(apiState.chainId);
         setApiState(apiState);
     })
     .catch(error => {
         console.log(error)
     })
   }
+
   function addWalletListener() {
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", (accounts) => {
@@ -145,27 +147,177 @@ export default function Explore() {
   },[]);
 
   const onTransferRequest = async () => {
-    const { success, status } = await Transfer(address, tokenId);
+    alert("On Transfer");
+    const { success, status } = await Transfer(transferAddress, tokenId);
     setStatus(status);
     if (success) {
       alert("Successfully transferred");
     }
   };
 
+  function getNFTData(address) {
+    const url = `https://api.covalenthq.com/v1/80001/address/${address}/balances_v2/?nft=true&key=ckey_876ab80803e44602a7ad845e463`;
+    axios
+      .get(url)
+      .then((response) => {
+        // console.log(response.data);
+        // console.log(response.data.data.items);
+        setApiState(response.data.data.items);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  const allNFTdata = [];
+  const rowColumnData = [];
+  let displayGrid = [];
+  const cardsData = apiState.map(function (item) {
+    if (item.type === "nft" && item.nft_data != null) {
+      console.log(item);
+      const nftData = item.nft_data;
+      return nftData.map(function (nft) {
+        allNFTdata.push(nft);
+        
+      });
+    }
+  });
+  if (allNFTdata.length > 0) {
+    const rows = Math.ceil(allNFTdata.length / 3);
+    let counter = 0;
+    for (let index = 0; index < rows; index++) {
+      const tempArray = [];
+      for (let j = 0; j < 3; j++) {
+        tempArray.push(allNFTdata[counter++]);
+      }
+      rowColumnData.push(tempArray);
+    }
+    displayGrid = rowColumnData.map((d) => {
+        return (
+          <Row>
+            {d.map((nft) => {
+              if (nft){
+                {/* debugger; */}
+              return (
+                <Col className="ml-auto mr-auto" lg="4" md="6">
+                  <Card className="card-coin card-plain">
+                    <CardHeader>
+                      <img
+                        alt="..."
+                        className="img-center img-fluid rounded-circle"
+                        src={nft.external_data.image}
+                      />
+                      <h4 className="title">{nft.external_data.name}</h4>
+                    </CardHeader>
+                    <CardBody>
+                      <Nav
+                        className="nav-tabs-primary justify-content-center"
+                        tabs
+                      >
+                        <NavItem>
+                          <NavLink
+                            className={classnames({
+                              active: tabs === 1,
+                            })}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setTabs(1);
+                            }}
+                            href="#pablo"
+                          >
+                            Info
+                          </NavLink>
+                        </NavItem>
+                        <NavItem>
+                          <NavLink
+                            className={classnames({
+                              active: tabs === 2,
+                            })}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setTabs(2);
+                            }}
+                            href="#pablo"
+                          >
+                            Transfer
+                          </NavLink>
+                        </NavItem>
+                      </Nav>
+                      <TabContent
+                        className="tab-subcategories"
+                        activeTab={"tab" + tabs}
+                      >
+                        <TabPane tabId="tab1">
+                          <Table className="tablesorter" responsive>
+                            <tbody>
+                              <tr>
+                                <td>TOKEN ID</td>
+                                <td>{nft.token_id}</td>
+                              </tr>
+                              <tr>
+                                <td>TOKEN URL</td>
+                                <td>{nft.token_url}</td>
+                              </tr>
+                            </tbody>
+                          </Table>
+                        </TabPane>
+                        <TabPane tabId="tab2">
+                        <Row>
+                          <Label sm="3">Send to</Label>
+                          <Col sm="9">
+                            <FormGroup>
+                              <Input
+                                placeholder="e.g. 0x1ffe.."
+                                type="text"
+                                value={transferAddress} 
+                                onChange={(e) => handleChange(e, nft.token_id)}
+                              />
+                              <FormText color="default" tag="span">
+                                Please enter a valid address.
+                              </FormText>
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                        <Button
+                          className="btn-simple btn-icon btn-round float-right"
+                          color="primary"
+                          type="submit"
+                          onClick={onTransferRequest}
+                        >
+                          <i className="tim-icons icon-send" />
+                        </Button>
+                        </TabPane>
+                      </TabContent>
+                    </CardBody>
+                  </Card>
+                </Col>
+              )};
+            })}
+          </Row>
+        );
+
+    });
+  }
   return (
-    <>
+    <React.Fragment>
       <IndexNavbar />
-      <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-      <Button color="info" id="walletButton" style={{position: 'absolute',  top:'11px',  zIndex: '100000000'}} onClick={connectWalletPressed}>
-        {walletAddress.length > 0 ? (
-          "Connected: " +
-          String(walletAddress).substring(0, 6) +
-          "..." +
-          String(walletAddress).substring(38)
-        ) : (
-          <span>Connect Wallet</span>
-        )}
-      </Button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Button color="info" id="walletButton" style={{position: 'absolute',  top:'11px',  zIndex: '100000000'}} onClick={connectWalletPressed}>
+          {walletAddress.length > 0 ? (
+            "Connected: " +
+            String(walletAddress).substring(0, 6) +
+            "..." +
+            String(walletAddress).substring(38)
+          ) : (
+            <span>Connect Wallet</span>
+          )}
+        </Button>
       </div>
       <div className="wrapper">
         <div className="page-header">
@@ -179,323 +331,26 @@ export default function Explore() {
             className="path"
             src={require("assets/img/path4.png").default}
           />
-          <Container className="align-items-center">
-            <Row>
-              <Col className="ml-auto mr-auto" lg="4" md="6">
-              <Card className="card-coin card-plain">
-                  <CardHeader>
-                    <img
-                      alt="..."
-                      className="img-center img-fluid rounded-circle"
-                      src="https://gateway.pinata.cloud/ipfs/QmZd9qJexMRdKH1LhMfKsmHZFqyWCQSr2yzo62Qm1ZWhaY"
-                    />
-                    <h4 className="title">Amazon</h4>
-                  </CardHeader>
-                  <CardBody>
-                    <Nav
-                      className="nav-tabs-primary justify-content-center"
-                      tabs
-                    >
-                      <NavItem>
-                        <NavLink
-                          className={classnames({
-                            active: tabs === 1,
-                          })}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTabs(1);
-                          }}
-                          href="#pablo"
-                        >
-                          Info
-                        </NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink
-                          className={classnames({
-                            active: tabs === 2,
-                          })}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTabs(2);
-                          }}
-                          href="#pablo"
-                        >
-                          Transfer
-                        </NavLink>
-                      </NavItem>
-                    </Nav>
-                    <TabContent
-                      className="tab-subcategories"
-                      activeTab={"tab" + tabs}
-                    >
-                      <TabPane tabId="tab1">
-                        <Table className="tablesorter" responsive>
-                          <tbody>
-                            <tr>
-                              <td>POINTS</td>
-                              <td>{apiState.apiAddress}</td>
-                            </tr>
-                            <tr>
-                              <td>EXPIRY</td>
-                              <td>{apiState.chainId}</td>
-                            </tr>
-                          </tbody>
-                        </Table>
-                      </TabPane>
-                      <TabPane tabId="tab2">
-                        <Row>
-                          <Label sm="3">Token ID</Label>
-                          <Col sm="9">
-                            <FormGroup>
-                              <Input
-                                placeholder="e.g. e7364bn"
-                                type="text"
-                                onChange={(event) => setTokenId(event.target.value)}
-                              />
-                              <FormText color="default" tag="span">
-                                Please enter a valid token ID.
-                              </FormText>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Label sm="3">Send to</Label>
-                          <Col sm="9">
-                            <FormGroup>
-                              <Input
-                                placeholder="e.g. 0x1ffe.."
-                                type="text"
-                                onChange={(event) => setAddress(event.target.value)}
-                              />
-                              <FormText color="default" tag="span">
-                                Please enter a valid address.
-                              </FormText>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Button
-                          className="btn-simple btn-icon btn-round float-right"
-                          color="primary"
-                          type="submit"
-                          onClick={onTransferRequest}
-                        >
-                          <i className="tim-icons icon-send" />
-                        </Button>
-                      </TabPane>
-                    </TabContent>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col className="ml-auto mr-auto" lg="4" md="6">
-                <Card className="card-coin card-plain">
-                  <CardHeader>
-                    <img
-                      alt="..."
-                      className="img-center img-fluid rounded-circle"
-                      src="https://gateway.pinata.cloud/ipfs/QmZd9qJexMRdKH1LhMfKsmHZFqyWCQSr2yzo62Qm1ZWhaY"
-                    />
-                    <h4 className="title">Amazon</h4>
-                  </CardHeader>
-                  <CardBody>
-                    <Nav
-                      className="nav-tabs-primary justify-content-center"
-                      tabs
-                    >
-                      <NavItem>
-                        <NavLink
-                          className={classnames({
-                            active: tabs === 1,
-                          })}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTabs(1);
-                          }}
-                          href="#pablo"
-                        >
-                          Info
-                        </NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink
-                          className={classnames({
-                            active: tabs === 2,
-                          })}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTabs(2);
-                          }}
-                          href="#pablo"
-                        >
-                          Transfer
-                        </NavLink>
-                      </NavItem>
-                    </Nav>
-                    <TabContent
-                      className="tab-subcategories"
-                      activeTab={"tab" + tabs}
-                    >
-                      <TabPane tabId="tab1">
-                        <Table className="tablesorter" responsive>
-                          {/* <thead className="text-primary">
-                            <tr>
-                              <th className="header">COIN</th>
-                              <th className="header">AMOUNT</th>
-                              <th className="header">VALUE</th>
-                            </tr>
-                          </thead> */}
-                          <tbody>
-                            <tr>
-                              <td>POINTS</td>
-                              <td>7.342</td>
-                            </tr>
-                            <tr>
-                              <td>EXPIRY</td>
-                              <td>30.737</td>
-                            </tr>
-                          </tbody>
-                        </Table>
-                      </TabPane>
-                      <TabPane tabId="tab2">
-                        <Row>
-                          <Label sm="3">Send to</Label>
-                          <Col sm="9">
-                            <FormGroup>
-                              <Input
-                                placeholder="e.g. 0x1ffe.."
-                                type="text"
-                              />
-                              <FormText color="default" tag="span">
-                                Please enter a valid address.
-                              </FormText>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Button
-                          className="btn-simple btn-icon btn-round float-right"
-                          color="primary"
-                          type="submit"
-                          onClick={onTransferRequest}
-                        >
-                          <i className="tim-icons icon-send" />
-                        </Button>
-                      </TabPane>
-                    </TabContent>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col className="ml-auto mr-auto" lg="4" md="6">
-              <Card className="card-coin card-plain">
-                  <CardHeader>
-                    <img
-                      alt="..."
-                      className="img-center img-fluid rounded-circle"
-                      src="https://gateway.pinata.cloud/ipfs/QmZd9qJexMRdKH1LhMfKsmHZFqyWCQSr2yzo62Qm1ZWhaY"
-                    />
-                    <h4 className="title">Amazon</h4>
-                  </CardHeader>
-                  <CardBody>
-                    <Nav
-                      className="nav-tabs-primary justify-content-center"
-                      tabs
-                    >
-                      <NavItem>
-                        <NavLink
-                          className={classnames({
-                            active: tabs === 1,
-                          })}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTabs(1);
-                          }}
-                          href="#pablo"
-                        >
-                          Info
-                        </NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink
-                          className={classnames({
-                            active: tabs === 2,
-                          })}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTabs(2);
-                          }}
-                          href="#pablo"
-                        >
-                          Transfer
-                        </NavLink>
-                      </NavItem>
-                    </Nav>
-                    <TabContent
-                      className="tab-subcategories"
-                      activeTab={"tab" + tabs}
-                    >
-                      <TabPane tabId="tab1">
-                        <Table className="tablesorter" responsive>
-                          <tbody>
-                            <tr>
-                              <td>POINTS</td>
-                              <td>{apiState.apiAddress}</td>
-                            </tr>
-                            <tr>
-                              <td>EXPIRY</td>
-                              <td>{apiState.chainId}</td>
-                            </tr>
-                          </tbody>
-                        </Table>
-                      </TabPane>
-                      <TabPane tabId="tab2">
-                        <Row>
-                          <Label sm="3">Token ID</Label>
-                          <Col sm="9">
-                            <FormGroup>
-                              <Input
-                                placeholder="e.g. e7364bn"
-                                type="text"
-                                onChange={(event) => setTokenId(event.target.value)}
-                              />
-                              <FormText color="default" tag="span">
-                                Please enter a valid token ID.
-                              </FormText>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Label sm="3">Send to</Label>
-                          <Col sm="9">
-                            <FormGroup>
-                              <Input
-                                placeholder="e.g. 0x1ffe.."
-                                type="text"
-                                onChange={(event) => setAddress(event.target.value)}
-                              />
-                              <FormText color="default" tag="span">
-                                Please enter a valid address.
-                              </FormText>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Button
-                          className="btn-simple btn-icon btn-round float-right"
-                          color="primary"
-                          type="submit"
-                          onClick={onTransferRequest}
-                        >
-                          <i className="tim-icons icon-send" />
-                        </Button>
-                      </TabPane>
-                    </TabContent>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          </Container>
+          <div>
+            <ul>
+              <div>
+                <Container className="align-items-center">
+                  {(() => {
+                    if (displayGrid.length > 0) {
+                      return displayGrid;
+                    }
+                  })()}
+                </Container>
+              </div>
+            </ul>
+          </div>
         </div>
         <Footer />
       </div>
-    </>
+    </React.Fragment>
   );
+//-----------
+//Older Return ----
+  
 }
 

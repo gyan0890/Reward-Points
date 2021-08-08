@@ -18,8 +18,15 @@
 import React from "react";
 
 // reactstrap components
-import { Container } from "reactstrap";
+import { Container, ButtonToggle } from "reactstrap";
+// import { useHistory } from "react-router-dom";
 
+// const history = useHistory();
+
+//   const routeChange = () =>{ 
+//     let path = `marketplace`; 
+//     history.push(path);
+//   }
 export default function PageHeader() {
   return (
     <div className="page-header header-filter">
@@ -37,6 +44,10 @@ export default function PageHeader() {
             All your reward points in one single wallet! <br/>
             What more ?! It is DECENTRALISED.
           </h3>
+          <a href="/marketplace">Explore Marketplace</a>
+          {/* <ButtonToggle color="primary" size="lg" onClick={routeChange}>
+              Explore Marketplace
+          </ButtonToggle> */}
         </div>
       </Container>
     </div>

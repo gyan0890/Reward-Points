@@ -24,6 +24,7 @@ import {
   Exchange,
   connectWallet,
   getCurrentWalletConnected,
+  Approve,
 } from "../util/interact";
 
 import IndexNavbar from "../../components/Navbars/IndexNavbar.js";
@@ -141,13 +142,20 @@ export default function UserProfile() {
     };
   }, []);
 
-  const onExchangeRequest = async (nftAddress, nft, auctionPeriod) => {
+  const onExchangeRequest = async (nft) => {
+    console.log(nft);
+    let nftAddress = '0x7aCeC4eccba9323a784C5720fB81f1e6944f0331';
+    let AuctionContract = '0x457F0D56862F0E0E965f37Ce057B87886420b8C4';
+    debugger;
+    await Approve(
+      nftAddress,
+      AuctionContract,
+      nft.token_id
+    );
     debugger;
     const { success, status } = await Exchange(
       nftAddress,
-      nft.token_id,
-      nft.token_url,
-      auctionPeriod
+      nft.token_id
     );
     setStatus(status);
     if (success) {
@@ -288,129 +296,105 @@ export default function UserProfile() {
       rowColumnData.push(tempArray);
     }
     displayGrid = rowColumnData.map((d) => {
-      return (
-        <Row>
-          {d.map((nft) => {
-            return (
-              <Col className="ml-auto mr-auto" lg="4" md="6">
-                <Card className="card-coin card-plain">
-                  <CardHeader>
-                    <img
-                      alt="..."
-                      className="img-center img-fluid rounded-circle"
-                      src="https://gateway.pinata.cloud/ipfs/QmZd9qJexMRdKH1LhMfKsmHZFqyWCQSr2yzo62Qm1ZWhaY"
-                    />
-                    <h4 className="title">Amazon</h4>
-                  </CardHeader>
-                  <CardBody>
-                    <Nav
-                      className="nav-tabs-primary justify-content-center"
-                      tabs
-                    >
-                      <NavItem>
-                        <NavLink
-                          className={classnames({
-                            active: tabs === 1,
-                          })}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTabs(1);
-                          }}
-                          href="#pablo"
-                        >
-                          Info
-                        </NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink
-                          className={classnames({
-                            active: tabs === 2,
-                          })}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTabs(2);
-                          }}
-                          href="#pablo"
-                        >
-                          Exchange
-                        </NavLink>
-                      </NavItem>
-                    </Nav>
-                    <TabContent
-                      className="tab-subcategories"
-                      activeTab={"tab" + tabs}
-                    >
-                      <TabPane tabId="tab1">
-                        <Table className="tablesorter" responsive>
-                          <tbody>
-                            <tr>
-                              <td>OWNER</td>
-                              <td>{nft.token_id}</td>
-                            </tr>
-                            <tr>
-                              <td>TOKEN URL</td>
-                              <td>{nft.token_url}</td>
-                            </tr>
-                          </tbody>
-                        </Table>
-                      </TabPane>
-                      <TabPane tabId="tab2">
-                        <Row>
-                          <Label sm="3">Auction Period</Label>
-                          <Col sm="9">
-                            <FormGroup>
-                              <Input
-                                placeholder="e.g. e7364bn"
-                                type="text"
-                                onChange={(event) =>
-                                  setAuctionPeriod(event.target.value)
-                                }
-                              />
-                              <FormText color="default" tag="span">
-                                Please enter Auction Period in Seconds.
-                              </FormText>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Label sm="3">Send to</Label>
-                          <Col sm="9">
-                            <FormGroup>
-                              <FormText tag="span">NFT Address: {}</FormText>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Label sm="3">Send to</Label>
-                          <Col sm="9">
-                            <FormGroup>
-                              <FormText tag="span">
-                                Token ID: {nft.token_id}
-                              </FormText>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Button
-                          className="btn-simple btn-icon btn-round float-right"
-                          color="primary"
-                          type="submit"
-                          data-attr="{nft.token_url}"
-                          data-to="{}"
-                          onClick={(event) => onExchangeRequest(nft)}
-                        >
-                          <i className="tim-icons icon-send" />
-                        </Button>
-                      </TabPane>
-                    </TabContent>
-                  </CardBody>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-      );
+        return (
+          <Row>
+            {d.map((nft) => {
+              if (nft){
+              return (
+                <Col className="ml-auto mr-auto" lg="4" md="6">
+                  <Card className="card-coin card-plain">
+                    <CardHeader>
+                      <img
+                        alt="..."
+                        className="img-center img-fluid rounded-circle"
+                        src="https://gateway.pinata.cloud/ipfs/QmZd9qJexMRdKH1LhMfKsmHZFqyWCQSr2yzo62Qm1ZWhaY"
+                      />
+                      <h4 className="title">Amazon</h4>
+                    </CardHeader>
+                    <CardBody>
+                      <Nav
+                        className="nav-tabs-primary justify-content-center"
+                        tabs
+                      >
+                        <NavItem>
+                          <NavLink
+                            className={classnames({
+                              active: tabs === 1,
+                            })}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setTabs(1);
+                            }}
+                            href="#pablo"
+                          >
+                            Info
+                          </NavLink>
+                        </NavItem>
+                        <NavItem>
+                          <NavLink
+                            className={classnames({
+                              active: tabs === 2,
+                            })}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setTabs(2);
+                            }}
+                            href="#pablo"
+                          >
+                            Exchange
+                          </NavLink>
+                        </NavItem>
+                      </Nav>
+                      <TabContent
+                        className="tab-subcategories"
+                        activeTab={"tab" + tabs}
+                      >
+                        <TabPane tabId="tab1">
+                          <Table className="tablesorter" responsive>
+                            <tbody>
+                              <tr>
+                                <td>TOKEN ID</td>
+                                <td>{nft.token_id}</td>
+                              </tr>
+                              <tr>
+                                <td>TOKEN URL</td>
+                                <td>{nft.token_url}</td>
+                              </tr>
+                            </tbody>
+                          </Table>
+                        </TabPane>
+                        <TabPane tabId="tab2">
+                          <Row>
+                            <Label sm="3">Token ID</Label>
+                            <Col sm="9">
+                              <FormGroup>
+                                <FormText tag="span">
+                                  Token ID: {nft.token_id}
+                                </FormText>
+                              </FormGroup>
+                            </Col>
+                          </Row>
+                          <Button
+                            className="btn-simple btn-icon btn-round float-right"
+                            color="primary"
+                            type="submit"
+                            data-attr="{nft.token_url}"
+                            data-to="{}"
+                            onClick={(event) => onExchangeRequest(nft)}
+                          >
+                            <i className="tim-icons icon-send" />
+                          </Button>
+                        </TabPane>
+                      </TabContent>
+                    </CardBody>
+                  </Card>
+                </Col>
+              )};
+            })}
+          </Row>
+        );
+
     });
-    debugger;
   }
   return (
     <React.Fragment>

@@ -28,6 +28,7 @@ import LandingPage from "views/examples/LandingPage.js";
 import Minter from "views/examples/Minter";
 import Explore from "views/examples/Explore";
 import UserProfile from "views/examples/UserProfile.js";
+import MarketPlace from "views/examples/MarketPlace";
 import RegisterPage from "views/examples/RegisterPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 
@@ -50,6 +51,10 @@ ReactDOM.render(
       <Route
         path="/user-profile-page"
         render={(props) => <UserProfile {...props} />}
+      />
+      <Route
+        path="/marketplace"
+        render={(props) => <MarketPlace {...props} />}
       />
       <Redirect from="/" to="/components" />
     </Switch>
