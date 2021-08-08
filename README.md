@@ -15,8 +15,8 @@ TODO:
 
 Screenshots for reference:
 
-![Organisation Minting Page] (MinterPage.png)
-![Points Exchange Marketplace] (MarketplacePage.png)
-![Landing Page] (Homepage.png)
+![Organisation Minting Page] (https://github.com/gyan0890/Reward-Points/blob/master/MinterPage.png)
+![Points Exchange Marketplace] (https://github.com/gyan0890/Reward-Points/blob/master/MarketplacePage.png)
+![Landing Page] (https://github.com/gyan0890/Reward-Points/blob/master/Homepage.png)
 
 
