@@ -156,7 +156,7 @@ export default function IndexNavbar() {
                 <p className="d-lg-none d-xl-none">Instagram</p>
               </NavLink>
             </NavItem>
-            <UncontrolledDropdown nav>
+            <UncontrolledDropdown nav  id="menucontainer">
               <DropdownToggle
                 caret
                 color="default"
@@ -177,10 +177,10 @@ export default function IndexNavbar() {
                   <i className="tim-icons icon-image-02" />
                   Explore NFTs
                 </DropdownItem>
-                <DropdownItem tag={Link} to="/user-profile-page">
+                {/* <DropdownItem tag={Link} to="/user-profile-page">
                   <i className="tim-icons icon-image-02" />
                   User Profile
-                </DropdownItem>
+                </DropdownItem> */}
                 {/* <DropdownItem tag={Link} to="/profile-page">
                   <i className="tim-icons icon-single-02" />
                   Profile Page

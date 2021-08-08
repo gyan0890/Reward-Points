@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { useEffect } from "react";
 
 // reactstrap components
 import { Container, ButtonToggle } from "reactstrap";
@@ -23,11 +23,18 @@ import { Container, ButtonToggle } from "reactstrap";
 
 // const history = useHistory();
 
-//   const routeChange = () =>{ 
-//     let path = `marketplace`; 
+//   const routeChange = () =>{
+//     let path = `marketplace`;
 //     history.push(path);
 //   }
 export default function PageHeader() {
+  function enableMenu() {
+    document.getElementById("menucontainer").style.display="block";
+  }
+
+  useEffect(()=>{
+    document.getElementById("menucontainer").style.display="none";
+  })
   return (
     <div className="page-header header-filter">
       <div className="squares square1" />
@@ -41,13 +48,32 @@ export default function PageHeader() {
         <div className="content-center brand">
           <h1 className="h1-seo">Unified Rewards</h1>
           <h3 className="d-none d-sm-block">
-            All your reward points in one single wallet! <br/>
+            All your reward points in one single wallet! <br />
             What more ?! It is DECENTRALISED.
           </h3>
-          <a href="/marketplace">Explore Marketplace</a>
-          {/* <ButtonToggle color="primary" size="lg" onClick={routeChange}>
-              Explore Marketplace
-          </ButtonToggle> */}
+          <ButtonToggle
+            color="primary"
+            size="lg"
+            onClick={() => {
+              window.location.pathname = "/marketplace";
+            }}
+          >
+            Explore Marketplace
+          </ButtonToggle>
+          <div className="button-holder" style={{ padding: "20px" }}>
+            <ButtonToggle color="primary" size="lg" onClick={enableMenu}>
+              Organization
+            </ButtonToggle>
+            <ButtonToggle
+              color="primary"
+              size="lg"
+              onClick={() => {
+                window.location.pathname = "/user-profile-page";
+              }}
+            >
+              User profile
+            </ButtonToggle>
+          </div>
         </div>
       </Container>
     </div>
