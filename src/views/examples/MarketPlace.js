@@ -185,7 +185,7 @@ export default function MarketPlace() {
           <Row>
             {d.map((nft) => {
               if (nft && nft.external_data != null){
-                {/* debugger; */}
+                debugger;
               return (
                 <Col className="ml-auto mr-auto" lg="4" md="6">
                   <Card className="card-coin card-plain">
@@ -230,11 +230,7 @@ export default function MarketPlace() {
                               </tr>
                               <tr>
                                 <td>POINTS</td>
-                                <td>{nft.external_data.points}</td>
-                              </tr>
-                              <tr>
-                                <td>EXPIRY</td>
-                                <td>{nft.external_data.expiry}</td>
+                                <td>100</td>
                               </tr>
                             </tbody>
                           </Table>

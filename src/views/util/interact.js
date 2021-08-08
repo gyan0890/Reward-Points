@@ -106,7 +106,6 @@ export const mintNFT = async (address, points, expiry) => {
 
   //make metadata
   const metadata = {};
-  debugger;
   address = address.toString();
   if(address == "0xdFE56933c0e112589A2BD414161B39aa3A1EC4BE".toLowerCase()){
     metadata.name = "Amazon";
@@ -158,7 +157,7 @@ export const mintNFT = async (address, points, expiry) => {
     return {
       success: true,
       status:
-        "✅ Check out your transaction on PolygonScan: https://mumbai.polygonscan.com/tx" +
+        "✅ Check out your transaction on PolygonScan: https://mumbai.polygonscan.com/tx/" +
         txHash,
     };
   } catch (error) {
@@ -230,7 +229,6 @@ export const Exchange = async(nftAddress, tokenID) => {
 };
 
 export const Approve = async(nftAddress,contractAddress, token_id) => {
-  debugger;
   window.contract = await new web3.eth.Contract(testNFTAbi, nftAddress);
   const transactionParameters = {
     to: nftAddress, // Required except during contract publications.

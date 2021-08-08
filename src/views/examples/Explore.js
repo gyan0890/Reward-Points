@@ -79,19 +79,6 @@ export default function Explore() {
     setTokenId(tokenId);
   }
 
-  function getNFTData(address) {
-    const url = `https://api.covalenthq.com/v1/80001/address/${address}/balances_v2/?nft=true&key=ckey_876ab80803e44602a7ad845e463`;
-    axios.get(url).then(response => {
-        console.log(response.data);
-        apiState.apiAddress = response.data.data.address;
-        apiState.chainId = response.data.data.chain_id;
-        setApiState(apiState);
-    })
-    .catch(error => {
-        console.log(error)
-    })
-  }
-
   function addWalletListener() {
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", (accounts) => {

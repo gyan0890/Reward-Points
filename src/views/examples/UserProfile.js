@@ -146,13 +146,13 @@ export default function UserProfile() {
     console.log(nft);
     let nftAddress = '0x7aCeC4eccba9323a784C5720fB81f1e6944f0331';
     let AuctionContract = '0x457F0D56862F0E0E965f37Ce057B87886420b8C4';
-    debugger;
+ 
     await Approve(
       nftAddress,
       AuctionContract,
       nft.token_id
     );
-    debugger;
+
     const { success, status } = await Exchange(
       nftAddress,
       nft.token_id
